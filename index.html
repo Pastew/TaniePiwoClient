@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -8,6 +8,7 @@
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
+    <link href="css/beer.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
           integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -19,14 +20,32 @@
 </head>
 
 <body>
-    <app>Loading...</app>
-
+    <app>
+        <div class="beer-box-loading">
+            <div class="beer">
+                <div class="cup">
+                    <div class="liquid"></div>
+                    <div class="stripe-1"></div>
+                    <div class="stripe-2"></div>
+                    <div class="stripe-3"></div>
+                </div>
+                <div class="cup-holder"></div>
+                <div class="foam">
+                    <div class="foam-1"></div>
+                    <div class="foam-2"></div>
+                    <div class="foam-3"></div>
+                </div>
+                <div class="bubbles-1"></div>
+                <div class="bubbles-2"></div>
+                <div class="bubbles-3"></div>
+            </div>
+        </div>
+    </app>
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
 
