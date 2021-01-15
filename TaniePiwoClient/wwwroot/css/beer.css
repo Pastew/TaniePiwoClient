@@ -1,24 +1,9 @@
-* {
-  box-sizing: border-box;
-}
-
-.beer-box-logo {
-  zoom: 0.08;
-  -moz-transform: scale(0.08);
-  position: relative;
-  width: 500px;
-  height: 500px;
-  background: none;
-  display: block;
-}
-
 .beer-box-loading {
-  zoom: 0.5;
-  -moz-transform: scale(0.5);
-  width: 500px;
-  height: 500px;
+  transform: scale(0.5);
+  width: 300px;
+  height: 300px;
   background: none;
-  position: absolute;
+  position: relative;
   margin: auto;
   right: 0;
   left: 0;
