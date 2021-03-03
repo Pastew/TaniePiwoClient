@@ -34,27 +34,34 @@
 
 @code
 {
-    private Map _map;
-    private DrawHandler _drawHandler;
-    private LatLng _markerLatLng = new LatLng { Lat = 47.5574007f, Lng = 16.3918687f };
+            private Map _map;
+            private DrawHandler _drawHandler;
+            private LatLng _markerLatLng = new LatLng { Lat = 50.01744009787155f, Lng = 19.892268319976615f };
 
-    protected override void OnInitialized()
-    {
-        var marker = new Marker(_markerLatLng)
-        {
-            Draggable = true,
-            Title = "Marker 1",
-            Popup = new Popup { Content = string.Format("I am at {0:0.00}° lat, {1:0.00}° lng", _markerLatLng.Lat, _markerLatLng.Lng) },
-            Tooltip = new Tooltip { Content = "Click and drag to move me" }
-        };
+            protected override void OnInitialized()
+            {
+                var marker = new Marker(_markerLatLng)
+                {
+                    Draggable = true,
+                    Title = "Marker 1",
+                    Popup = new Popup { Content = string.Format("I am at {0:0.00}° lat, {1:0.00}° lng", _markerLatLng.Lat, _markerLatLng.Lng) },
+                    Tooltip = new Tooltip { Content = "Click and drag to move me" }
+                };
 
-        _map = new Map(jsRuntime)
-        {
-            Center = _markerLatLng,
+                marker.Icon = new Icon {
+                    Url = "/markers/marker_13.png",
+                    HasAnchor = true, Anchor = new System.Drawing.Point(37, 133),
+                    HasSize = true, Size = new System.Drawing.Size(53, 67)
+
+            };
+
+            _map = new Map(jsRuntime)
+            {
+                Center = _markerLatLng,
             Zoom = 4.8f
-        };
+            };
 
-        _map.OnInitialized += () =>
+            _map.OnInitialized += () =>
         {
             _map.AddLayer(new TileLayer
             {
@@ -65,10 +72,10 @@
             _map.AddLayer(marker);
         };
 
-        _drawHandler = new DrawHandler(_map, jsRuntime);
+    _drawHandler = new DrawHandler(_map, jsRuntime);
 
-        marker.OnMove += OnDrag;
-        marker.OnMoveEnd += OnDragEnd;
+    marker.OnMove += OnDrag;
+    marker.OnMoveEnd += OnDragEnd;
     }
 
     private void OnDrag(Marker marker, DragEvent evt)
