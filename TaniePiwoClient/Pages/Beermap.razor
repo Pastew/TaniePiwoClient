@@ -25,6 +25,7 @@
     private int sizeY = (int)(136 * _markerScale);
     private int anchorX = (int)(37 * _markerScale);
     private int anchorY = (int)(133 * _markerScale);
+    private int popupAnchorY = (int)(-120 * _markerScale);
 
     protected override void OnInitialized()
     {
@@ -43,10 +44,15 @@
             marker.Icon = new Icon
             {
                 Url = "/markers/marker_13.png",
+                
                 HasAnchor = true,
                 Anchor = new System.Drawing.Point(anchorX, anchorY),
+                
                 HasSize = true,
                 Size = new System.Drawing.Size(sizeX, sizeY),
+                
+                HasPopupAnchor = true, 
+                PopupAnchor = new System.Drawing.Point(0, popupAnchorY),
                 //TooltipAnchor = new System.Drawing.Point(37, 233),
             };
 
@@ -59,7 +65,7 @@
         _map = new Map(jsRuntime)
         {
             Center = _mapCenterLatLng,
-            Zoom = 11f
+            Zoom = 14f
         };
 
         _map.OnInitialized += () =>
@@ -81,7 +87,7 @@
     {
         float minLat = 50.019156f;
         float minLng = 19.894158f;
-        
+
         float maxLat = 50.083534f;
         float maxLng = 19.972817f;
 

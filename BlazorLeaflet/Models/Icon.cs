@@ -35,6 +35,8 @@ namespace BlazorLeaflet.Models
         /// </summary>
         public Point Anchor { get; set; }
 
+        public bool HasPopupAnchor { get; set; }
+
         /// <summary>
         /// The coordinates of the point from which popups will "open", relative to the icon anchor.
         /// </summary>

@@ -230,7 +230,7 @@ function createIcon(icon) {
         iconRetinaUrl: icon.retinaUrl,
         iconSize: icon.hasSize ? L.point(icon.size.width, icon.size.height) : null,
         iconAnchor: icon.hasAnchor ? L.point(icon.anchor.x, icon.anchor.y) : null,
-        popupAnchor: L.point(icon.popupAnchor.x, icon.popupAnchor.y),
+        popupAnchor: icon.hasPopupAnchor ? L.point(icon.popupAnchor.x, icon.popupAnchor.y) : null,
         tooltipAnchor: L.point(icon.tooltipAnchor.x, icon.tooltipAnchor.y),
         shadowUrl: icon.shadowUrl,
         shadowRetinaUrl: icon.shadowRetinaUrl,
