@@ -18,7 +18,7 @@ namespace BlazorLeaflet.Samples.Data
             DrawingCircle,
             DrawingPolygon
         }
-
+        
         readonly Map _map;
         readonly IJSRuntime _jsRuntime;
         readonly Rectangle _rectangle = new Rectangle();
