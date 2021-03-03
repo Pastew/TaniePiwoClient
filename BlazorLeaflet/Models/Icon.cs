@@ -42,6 +42,8 @@ namespace BlazorLeaflet.Models
         /// </summary>
         public Point PopupAnchor { get; set; } = Point.Empty;
 
+        public bool HasTooltipAnchor { get; set; }
+
         /// <summary>
         /// The coordinates of the point from which tooltips will "open", relative to the icon anchor.
         /// </summary>
