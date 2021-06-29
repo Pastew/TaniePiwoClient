@@ -39,12 +39,16 @@
             string line;
             while ((line = reader.ReadLine()) != null)
             {
+                Console.WriteLine(line);
                 List<string> columns = line.Split(";").ToList();
                 PubData pubData = new PubData();
                 pubs.Add(pubData);
                 pubData.Name = columns[0];
+                
                 pubData.Lat = float.Parse(columns[1]);
                 pubData.Lng = float.Parse(columns[2]);
+                Console.WriteLine($"Lat: {pubData.Lat}");
+                Console.WriteLine($"Lng: {pubData.Lng}");
                 
                 pubData.BeerDataList = new List<BeerData>();
                 for (int i = 3; columns.Count > i; i++)
@@ -52,7 +56,11 @@
                     BeerData beerData = new BeerData();
                     List<string> beerStringSplit = columns[i].Split(":").ToList();
                     beerData.Name = beerStringSplit[0];
-                    beerData.Price = (int) (float.Parse(beerStringSplit[1].Trim()) * 100);
+                    Console.WriteLine($"Price: {beerData.Name}");
+
+                    string price = beerStringSplit[1];
+                    Console.WriteLine($"Price: {price}");
+                    beerData.Price = (int) (float.Parse(price.Trim()) * 100);
                     pubData.BeerDataList.Add(beerData);
                 }
             }
@@ -87,6 +95,7 @@
     {
         HttpResponseMessage response = await httpClient.GetAsync($"{baseURL}krakow.txt");
         string result = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Result: {result}");
         pubDataList = GetPubDataList(result);
 
         Queue<Marker> markers = new Queue<Marker>();
