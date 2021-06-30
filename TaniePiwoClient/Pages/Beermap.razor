@@ -101,9 +101,11 @@
                 Tooltip = new Tooltip {Content = FormatBeersContent(pubData.BeerDataList)}
             };
 
+            int cheapestBeerPrice = pubData.CheapestBeerPrice / 100; 
+            Console.WriteLine($"cheapestBeerPrice: {cheapestBeerPrice}");
             marker.Icon = new Icon
             {
-                Url = "/markers/marker_13.png",
+                Url = $"/markers/marker_{cheapestBeerPrice}.png",
 
                 HasAnchor = true,
                 Anchor = new System.Drawing.Point(anchorX, anchorY),

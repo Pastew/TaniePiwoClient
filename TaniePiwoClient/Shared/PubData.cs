@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TaniePiwoClient.Shared
 {
@@ -8,5 +9,6 @@ namespace TaniePiwoClient.Shared
         public float Lat;
         public float Lng;
         public List<BeerData> BeerDataList;
+        public int CheapestBeerPrice => BeerDataList.Min(b => b.Price);
     }
 }
