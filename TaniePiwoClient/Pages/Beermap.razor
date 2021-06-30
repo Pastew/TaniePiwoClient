@@ -1,171 +1,116 @@
 ﻿@page "/beermap"
 
 @using BlazorLeaflet.Models
+@using BlazorLeaflet.Models.Events
 @using BlazorLeaflet.Samples.Data
 @using BlazorLeaflet
-@using System.IO
-@using System.Text
 @inject IJSRuntime jsRuntime
-@inject HttpClient httpClient
-
 
 <h1>Piwna mapa</h1>
-     <div style="height: 500px; width: 500px;">
-         @* <LeafletMap Map="_map"/> *@
-     </div>
 
-@* @code *@
-@* { *@
-@*     private Map _map; *@
-@*     private DrawHandler _drawHandler; *@
-@*     private LatLng _mapCenterLatLng = new LatLng { Lat = 50.061446f, Lng = 19.938076f }; *@
-@*     private const string baseURL = "https://raw.githubusercontent.com/Pastew/TaniePiwoDatabase/main/"; *@
-@*     private List<PubData> pubDataList = new List<PubData>(); *@
-@*      *@
-@*     private static float _markerScale = 0.5f; *@
-@*     private int sizeX = (int)(107 * _markerScale); *@
-@*     private int sizeY = (int)(136 * _markerScale); *@
-@*     private int anchorX = (int)(37 * _markerScale); *@
-@*     private int anchorY = (int)(133 * _markerScale); *@
-@*     private int popupAnchorY = (int)(-120 * _markerScale); *@
-@*     private int tooltipAnchorY = (int)(-50 * _markerScale); *@
-@* *@
-@* *@
-@*     private List<PubData> GetPubDataList(string result) *@
-@*     { *@
-@*         List<PubData> pubs = new List<PubData>(); *@
-@*         using (StringReader reader = new StringReader(result)) *@
-@*         { *@
-@*             string line; *@
-@*             while ((line = reader.ReadLine()) != null) *@
-@*             { *@
-@*                 Console.WriteLine(line); *@
-@*                 List<string> columns = line.Split(";").ToList(); *@
-@*                 PubData pubData = new PubData(); *@
-@*                 pubs.Add(pubData); *@
-@*                 pubData.Name = columns[0]; *@
-@*                  *@
-@*                 pubData.Lat = float.Parse(columns[1]); *@
-@*                 pubData.Lng = float.Parse(columns[2]); *@
-@*                 Console.WriteLine($"Lat: {pubData.Lat}"); *@
-@*                 Console.WriteLine($"Lng: {pubData.Lng}"); *@
-@*                  *@
-@*                 pubData.BeerDataList = new List<BeerData>(); *@
-@*                 for (int i = 3; columns.Count > i; i++) *@
-@*                 { *@
-@*                     BeerData beerData = new BeerData(); *@
-@*                     List<string> beerStringSplit = columns[i].Split(":").ToList(); *@
-@*                     beerData.Name = beerStringSplit[0]; *@
-@*                     Console.WriteLine($"Price: {beerData.Name}"); *@
-@* *@
-@*                     string price = beerStringSplit[1]; *@
-@*                     Console.WriteLine($"Price: {price}"); *@
-@*                     beerData.Price = (int) (float.Parse(price.Trim()) * 100); *@
-@*                     pubData.BeerDataList.Add(beerData); *@
-@*                 } *@
-@*             } *@
-@*         } *@
-@* *@
-@*         return pubs; *@
-@*     } *@
-@* *@
-@*     protected override void OnInitialized() *@
-@*     { *@
-@*         _map = new Map(jsRuntime) *@
-@*         { *@
-@*             Center = _mapCenterLatLng, *@
-@*             Zoom = 14f *@
-@*         }; *@
-@* *@
-@*         _map.OnInitialized += async () => *@
-@*         { *@
-@*             _map.AddLayer(new TileLayer *@
-@*             { *@
-@*                 UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png", *@
-@*                 Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors", *@
-@*             }); *@
-@* *@
-@*             await SetupMarkers(); *@
-@*         }; *@
-@* *@
-@*         _drawHandler = new DrawHandler(_map, jsRuntime); *@
-@*     } *@
-@* *@
-@*     private async Task SetupMarkers() *@
-@*     { *@
-@*         HttpResponseMessage response = await httpClient.GetAsync($"{baseURL}krakow.txt"); *@
-@*         string result = await response.Content.ReadAsStringAsync(); *@
-@*         Console.WriteLine($"Result: {result}"); *@
-@*         pubDataList = GetPubDataList(result); *@
-@* *@
-@*         Queue<Marker> markers = new Queue<Marker>(); *@
-@*         foreach (PubData pubData in pubDataList) *@
-@*         { *@
-@*             LatLng _markerLatLng = new LatLng(pubData.Lat, pubData.Lng); *@
-@*             Marker marker = new Marker(_markerLatLng) *@
-@*             { *@
-@*                 Draggable = false, *@
-@*                 // Title = "Some title", *@
-@*                 Popup = new Popup {Content = pubData.Name}, *@
-@*                 Tooltip = new Tooltip {Content = FormatBeersContent(pubData.BeerDataList)} *@
-@*             }; *@
-@* *@
-@*             marker.Icon = new Icon *@
-@*             { *@
-@*                 Url = "/markers/marker_13.png", *@
-@* *@
-@*                 HasAnchor = true, *@
-@*                 Anchor = new System.Drawing.Point(anchorX, anchorY), *@
-@* *@
-@*                 HasSize = true, *@
-@*                 Size = new System.Drawing.Size(sizeX, sizeY), *@
-@* *@
-@*                 HasPopupAnchor = true, *@
-@*                 PopupAnchor = new System.Drawing.Point(0, popupAnchorY), *@
-@* *@
-@*                 HasTooltipAnchor = true, *@
-@*                 TooltipAnchor = new System.Drawing.Point(0, tooltipAnchorY), *@
-@*                 //TooltipAnchor = new System.Drawing.Point(37, 233), *@
-@*             }; *@
-@* *@
-@*             markers.Enqueue(marker); *@
-@*         } *@
-@* *@
-@*         while (markers.Count > 0) *@
-@*             _map.AddLayer(markers.Dequeue()); *@
-@* *@
-@*     } *@
-@* *@
-@*     private string FormatBeersContent(List<BeerData> pubDataBeerDataList) *@
-@*     { *@
-@*         StringBuilder sb = new StringBuilder(); *@
-@*         foreach (BeerData beerData in pubDataBeerDataList) *@
-@*             sb.Append($"{beerData.Name}: {FormatGroszyToPLN(beerData.Price)}<br>"); *@
-@*          *@
-@*         return sb.ToString(); *@
-@*     } *@
-@* *@
-@*     private static string FormatGroszyToPLN(int groszy) *@
-@*     { *@
-@*         float zlotych = groszy / 100f; *@
-@*         if (zlotych % 1 == 0) *@
-@*             return $"{zlotych} PLN"; *@
-@*         else *@
-@*             return String.Format("{0:0.00} PLN", zlotych); *@
-@*     } *@
-@* *@
-@*     // Random rnd = new Random(); *@
-@*     // private LatLng getRandomKrakowLatLng() *@
-@*     // { *@
-@*     //     float minLat = 50.019156f; *@
-@*     //     float minLng = 19.894158f; *@
-@*     // *@
-@*     //     float maxLat = 50.083534f; *@
-@*     //     float maxLng = 19.972817f; *@
-@*     // *@
-@*     //     float rndLat = (float)(minLat + (maxLat - minLat) * rnd.NextDouble()); *@
-@*     //     float rndLng = (float)(minLng + (maxLng - minLng) * rnd.NextDouble()); *@
-@*     // *@
-@*     //     return new LatLng(rndLat, rndLng); *@
-@*     // } *@
-@* } *@
+
+<div style="height: 500px; width: 500px;">
+    <LeafletMap Map="_map" />
+</div>
+
+@code
+{
+    private Map _map;
+    private DrawHandler _drawHandler;
+    private LatLng _mapCenterLatLng = new LatLng { Lat = 50.061446f, Lng = 19.938076f };
+    Random rnd = new Random();
+
+    private static float _markerScale = 0.5f;
+    private int sizeX = (int)(107 * _markerScale);
+    private int sizeY = (int)(136 * _markerScale);
+    private int anchorX = (int)(37 * _markerScale);
+    private int anchorY = (int)(133 * _markerScale);
+    private int popupAnchorY = (int)(-120 * _markerScale);
+    private int tooltipAnchorY = (int)(-50 * _markerScale);
+
+    protected override void OnInitialized()
+    {
+        Queue<Marker> markers = new Queue<Marker>();
+        for (int i = 0; i < 200; i++)
+        {
+            LatLng _markerLatLng = getRandomLatLng();
+            Marker marker = new Marker(_markerLatLng)
+            {
+                Draggable = false,
+                Title = "Marker " + i,
+                Popup = new Popup { Content = "Pub Pod Ziemią" },
+                Tooltip = new Tooltip { Content = "Perła lana: 5zł <br> Żywiec butelka: 6zł <br> Kasztelan butelka: 6zł <br> Bojan butelka: 8zł" }
+            };
+
+            marker.Icon = new Icon
+            {
+                Url = "/markers/marker_13.png",
+
+                HasAnchor = true,
+                Anchor = new System.Drawing.Point(anchorX, anchorY),
+
+                HasSize = true,
+                Size = new System.Drawing.Size(sizeX, sizeY),
+
+                HasPopupAnchor = true,
+                PopupAnchor = new System.Drawing.Point(0, popupAnchorY),
+
+                HasTooltipAnchor = true,
+                TooltipAnchor = new System.Drawing.Point(0, tooltipAnchorY),
+                //TooltipAnchor = new System.Drawing.Point(37, 233),
+            };
+
+            //marker.OnMove += OnDrag;
+            //marker.OnMoveEnd += OnDragEnd;
+
+            markers.Enqueue(marker);
+        }
+
+        _map = new Map(jsRuntime)
+        {
+            Center = _mapCenterLatLng,
+            Zoom = 14f
+        };
+
+        _map.OnInitialized += () =>
+        {
+            _map.AddLayer(new TileLayer
+            {
+                UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+            });
+
+            while (markers.Count > 0)
+                _map.AddLayer(markers.Dequeue());
+        };
+
+        _drawHandler = new DrawHandler(_map, jsRuntime);
+    }
+
+    private LatLng getRandomLatLng()
+    {
+        float minLat = 50.019156f;
+        float minLng = 19.894158f;
+
+        float maxLat = 50.083534f;
+        float maxLng = 19.972817f;
+
+        float rndLat = (float)(minLat + (maxLat - minLat) * rnd.NextDouble());
+        float rndLng = (float)(minLng + (maxLng - minLng) * rnd.NextDouble());
+
+        return new LatLng(rndLat, rndLng);
+    }
+
+    //private void OnDrag(Marker marker, DragEvent evt)
+    //{
+    //    _markerLatLng = evt.LatLng;
+    //    StateHasChanged();
+    //}
+
+    //private async void OnDragEnd(Marker marker, Event e)
+    //{
+    //    marker.Position = _markerLatLng;
+    //    marker.Popup.Content = string.Format("I am now at {0:0.00}° lat, {1:0.00}° lng", _markerLatLng.Lat, _markerLatLng.Lng);
+    //    await LeafletInterops.UpdatePopupContent(jsRuntime, _map.Id, marker);
+    //}
+}
