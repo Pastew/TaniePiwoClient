@@ -6,6 +6,7 @@
 @using System.IO
 @using System.Text
 @inject IJSRuntime jsRuntime
+@inject HttpClient httpClient
 
 
 <h1>Piwna mapa</h1>
@@ -84,7 +85,7 @@
                 Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
             });
 
-            // await SetupMarkers();
+            await SetupMarkers();
         };
 
         _drawHandler = new DrawHandler(_map, jsRuntime);
@@ -92,6 +93,10 @@
 
     private async Task SetupMarkers()
     {
+        HttpResponseMessage response = await httpClient.GetAsync($"{baseURL}krakow.txt");
+        string result = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Result: {result}");
+        pubDataList = GetPubDataList(result);
 
         Queue<Marker> markers = new Queue<Marker>();
         foreach (PubData pubData in pubDataList)
