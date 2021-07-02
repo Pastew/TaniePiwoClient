@@ -8,7 +8,6 @@
 @inject IJSRuntime jsRuntime
 @inject HttpClient httpClient
 
-
 <h1>Piwna mapa</h1>
 <div style="height: 500px; width: 500px;">
     <LeafletMap Map="_map" />
@@ -95,7 +94,6 @@
 
         while (markers.Count > 0)
             _map.AddLayer(markers.Dequeue());
-
     }
 
     private PubData[] GetPubDataList(string result)
