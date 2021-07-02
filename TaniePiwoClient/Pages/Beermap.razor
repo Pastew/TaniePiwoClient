@@ -6,7 +6,6 @@
 @using System.IO
 @using System.Text
 @inject IJSRuntime jsRuntime
-@inject HttpClient httpClient
 
 
 <h1>Piwna mapa</h1>
@@ -19,9 +18,8 @@
     private Map _map;
     private DrawHandler _drawHandler;
     private LatLng _mapCenterLatLng = new LatLng { Lat = 50.061446f, Lng = 19.938076f };
-    private const string baseURL = "https://raw.githubusercontent.com/Pastew/TaniePiwoDatabase/main/";
     private List<PubData> pubDataList = new List<PubData>();
-    
+
     private static float _markerScale = 0.5f;
     private int sizeX = (int)(107 * _markerScale);
     private int sizeY = (int)(136 * _markerScale);
@@ -45,7 +43,7 @@
                 pubData.Name = columns[0];
                 pubData.Lat = float.Parse(columns[1]);
                 pubData.Lng = float.Parse(columns[2]);
-                
+
                 pubData.BeerDataList = new List<BeerData>();
                 for (int i = 3; columns.Count > i; i++)
                 {
@@ -61,7 +59,7 @@
         return pubs;
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         _map = new Map(jsRuntime)
         {
@@ -69,7 +67,7 @@
             Zoom = 14f
         };
 
-        _map.OnInitialized += async () =>
+        _map.OnInitialized += () =>
         {
             _map.AddLayer(new TileLayer
             {
@@ -77,75 +75,75 @@
                 Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
             });
 
-            await SetupMarkers();
+            //SetupMarkers();
         };
 
         _drawHandler = new DrawHandler(_map, jsRuntime);
     }
 
-    private async Task SetupMarkers()
-    {
-        HttpResponseMessage response = await httpClient.GetAsync($"{baseURL}krakow.txt");
-        string result = await response.Content.ReadAsStringAsync();
-        pubDataList = GetPubDataList(result);
+    //private void SetupMarkers()
+    //{
+    //    string result = "xx";
+    //    //string result = await response.Content.ReadAsStringAsync();
+    //    pubDataList = GetPubDataList(result);
 
-        Queue<Marker> markers = new Queue<Marker>();
-        foreach (PubData pubData in pubDataList)
-        {
-            LatLng _markerLatLng = new LatLng(pubData.Lat, pubData.Lng);
-            Marker marker = new Marker(_markerLatLng)
-            {
-                Draggable = false,
-                // Title = "Some title",
-                Popup = new Popup {Content = pubData.Name},
-                Tooltip = new Tooltip {Content = FormatBeersContent(pubData.BeerDataList)}
-            };
+    //    Queue<Marker> markers = new Queue<Marker>();
+    //    foreach (PubData pubData in pubDataList)
+    //    {
+    //        LatLng _markerLatLng = new LatLng(pubData.Lat, pubData.Lng);
+    //        Marker marker = new Marker(_markerLatLng)
+    //        {
+    //            Draggable = false,
+    //            // Title = "Some title",
+    //            Popup = new Popup {Content = pubData.Name},
+    //            Tooltip = new Tooltip {Content = FormatBeersContent(pubData.BeerDataList)}
+    //        };
 
-            int cheapestBeerPrice = pubData.CheapestBeerPrice / 100; 
-            Console.WriteLine($"cheapestBeerPrice: {cheapestBeerPrice}");
-            marker.Icon = new Icon
-            {
-                Url = $"/markers/marker_{cheapestBeerPrice}.png",
+    //        int cheapestBeerPrice = pubData.CheapestBeerPrice / 100;
+    //        Console.WriteLine($"cheapestBeerPrice: {cheapestBeerPrice}");
+    //        marker.Icon = new Icon
+    //        {
+    //            Url = $"/markers/marker_{cheapestBeerPrice}.png",
 
-                HasAnchor = true,
-                Anchor = new System.Drawing.Point(anchorX, anchorY),
+    //            HasAnchor = true,
+    //            Anchor = new System.Drawing.Point(anchorX, anchorY),
 
-                HasSize = true,
-                Size = new System.Drawing.Size(sizeX, sizeY),
+    //            HasSize = true,
+    //            Size = new System.Drawing.Size(sizeX, sizeY),
 
-                HasPopupAnchor = true,
-                PopupAnchor = new System.Drawing.Point(0, popupAnchorY),
+    //            HasPopupAnchor = true,
+    //            PopupAnchor = new System.Drawing.Point(0, popupAnchorY),
 
-                HasTooltipAnchor = true,
-                TooltipAnchor = new System.Drawing.Point(0, tooltipAnchorY),
-                //TooltipAnchor = new System.Drawing.Point(37, 233),
-            };
+    //            HasTooltipAnchor = true,
+    //            TooltipAnchor = new System.Drawing.Point(0, tooltipAnchorY),
+    //            //TooltipAnchor = new System.Drawing.Point(37, 233),
+    //        };
 
-            markers.Enqueue(marker);
-        }
+    //        markers.Enqueue(marker);
+    //    }
 
-        while (markers.Count > 0)
-            _map.AddLayer(markers.Dequeue());
+    //    while (markers.Count > 0)
+    //        _map.AddLayer(markers.Dequeue());
 
-    }
+    //}
 
-    private string FormatBeersContent(List<BeerData> pubDataBeerDataList)
-    {
-        StringBuilder sb = new StringBuilder();
-        foreach (BeerData beerData in pubDataBeerDataList)
-            sb.Append($"{beerData.Name}: {FormatGroszyToPLN(beerData.Price)}<br>");
-        
-        return sb.ToString();
-    }
+    //private string FormatBeersContent(List<BeerData> pubDataBeerDataList)
+    //{
+    //    StringBuilder sb = new StringBuilder();
+    //    foreach (BeerData beerData in pubDataBeerDataList)
+    //        sb.Append($"{beerData.Name}: {FormatGroszyToPLN(beerData.Price)}<br>");
 
-    private static string FormatGroszyToPLN(int groszy)
-    {
-        float zlotych = groszy / 100f;
-        if (zlotych % 1 == 0)
-            return $"{zlotych} PLN";
-        else
-            return String.Format("{0:0.00} PLN", zlotych);
-    }
+    //    return sb.ToString();
+    //}
+
+    //private static string FormatGroszyToPLN(int groszy)
+    //{
+    //    float zlotych = groszy / 100f;
+    //    if (zlotych % 1 == 0)
+    //        return $"{zlotych} PLN";
+    //    else
+    //        return String.Format("{0:0.00} PLN", zlotych);
+    //}
 
     // Random rnd = new Random();
     // private LatLng getRandomKrakowLatLng()
