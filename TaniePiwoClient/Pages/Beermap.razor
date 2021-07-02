@@ -20,7 +20,7 @@
     private DrawHandler _drawHandler;
     private LatLng _mapCenterLatLng = new LatLng { Lat = 50.061446f, Lng = 19.938076f };
     private const string baseURL = "https://raw.githubusercontent.com/Pastew/TaniePiwoDatabase/main/";
-    private List<PubData> pubDataList = new List<PubData>();
+    private PubData[] pubDataList;
 
     private static float _markerScale = 0.5f;
     private int sizeX = (int)(107 * _markerScale);
@@ -29,37 +29,6 @@
     private int anchorY = (int)(133 * _markerScale);
     private int popupAnchorY = (int)(-120 * _markerScale);
     private int tooltipAnchorY = (int)(-50 * _markerScale);
-
-
-    private List<PubData> GetPubDataList(string result)
-    {
-        List<PubData> pubs = new List<PubData>();
-        using (StringReader reader = new StringReader(result))
-        {
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                List<string> columns = line.Split(";").ToList();
-                PubData pubData = new PubData();
-                pubs.Add(pubData);
-                pubData.Name = columns[0];
-                pubData.Lat = float.Parse(columns[1]);
-                pubData.Lng = float.Parse(columns[2]);
-
-                pubData.BeerDataList = new List<BeerData>();
-                for (int i = 3; columns.Count > i; i++)
-                {
-                    BeerData beerData = new BeerData();
-                    List<string> beerStringSplit = columns[i].Split(":").ToList();
-                    beerData.Name = beerStringSplit[0];
-                    beerData.Price = (int)(float.Parse(beerStringSplit[1].Trim()) * 100);
-                    pubData.BeerDataList.Add(beerData);
-                }
-            }
-        }
-
-        return pubs;
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -127,6 +96,36 @@
         while (markers.Count > 0)
             _map.AddLayer(markers.Dequeue());
 
+    }
+
+    private PubData[] GetPubDataList(string result)
+    {
+        List<PubData> pubs = new List<PubData>();
+        using (StringReader reader = new StringReader(result))
+        {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                List<string> columns = line.Split(";").ToList();
+                PubData pubData = new PubData();
+                pubs.Add(pubData);
+                pubData.Name = columns[0];
+                pubData.Lat = float.Parse(columns[1], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                pubData.Lng = float.Parse(columns[2], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+
+                pubData.BeerDataList = new List<BeerData>();
+                for (int i = 3; columns.Count > i; i++)
+                {
+                    BeerData beerData = new BeerData();
+                    List<string> beerStringSplit = columns[i].Split(":").ToList();
+                    beerData.Name = beerStringSplit[0];
+                    beerData.Price = (int)(float.Parse(beerStringSplit[1].Trim()) * 100);
+                    pubData.BeerDataList.Add(beerData);
+                }
+            }
+        }
+
+        return pubs.ToArray();
     }
 
     private string FormatBeersContent(List<BeerData> pubDataBeerDataList)
