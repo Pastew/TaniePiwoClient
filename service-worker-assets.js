@@ -9,12 +9,16 @@
       "url": "BREVE2.ttf"
     },
     {
-      "hash": "sha256-xz3qYBWwgOgFMz2ySOTgVnNZihGS4AwskKS\/l0\/SPfo=",
+      "hash": "sha256-EEsB1oOMVoNcWtc4tp4ilUI3KPZ5vqtk8dHvv7WFKR8=",
       "url": "css\/app.css"
     },
     {
       "hash": "sha256-DbnTiPdEGm6RPjdvFjDHIHIV35r81wAiMGPcv+WGS4I=",
       "url": "css\/beer.css"
+    },
+    {
+      "hash": "sha256-9h1cUgFedEsb\/rg+C1Hjl29KmB58aIYZw4p4cIZjlO4=",
+      "url": "css\/beermap.css"
     },
     {
       "hash": "sha256-YLGeXaapI0\/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=",
@@ -73,7 +77,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-zYAiOYzhktDMUEs62MK5Qmz9z+VP\/E4StO9FN6hIVSs=",
+      "hash": "sha256-9Svnv+LHaE+czIO3fQRi3EAXnSSfhH43sxPZlVigsj8=",
       "url": "index.html"
     },
     {
@@ -145,7 +149,7 @@
       "url": "_content\/BlazorLeaflet\/leafletBlazorInterops.js"
     },
     {
-      "hash": "sha256-whq+5ld3oH2pZ0\/NQG00CAhd1ebnIrHqP2P5m0W0DBw=",
+      "hash": "sha256-gu6Z\/yBvKtiN3lkBkNNfz5UUJxn4fjwasYUINeUHUY0=",
       "url": "_framework\/_bin\/TaniePiwoClient.dll"
     },
     {
@@ -353,15 +357,15 @@
       "url": "_framework\/_bin\/Microsoft.JSInterop.WebAssembly.dll"
     },
     {
-      "hash": "sha256-7oamPwKGK19cpkIncTXO6xssaukTKqizdN3Y+McFM8w=",
+      "hash": "sha256-Bbpdxuam3kxDoqdrtxfDqCJJ04DKjKOTewZqMID5H4s=",
       "url": "_framework\/_bin\/BlazorLeaflet.dll"
     },
     {
-      "hash": "sha256-MFZNaNgUlYeFv8p+eWFJJD2g6O6PPupLDDk2rNapu\/g=",
+      "hash": "sha256-Fj7Cryeik4XNM+rMYNpGSKAX98pA1SgrYFzGhhS8gP4=",
       "url": "_framework\/_bin\/TaniePiwoClient.pdb"
     },
     {
-      "hash": "sha256-jM5pt\/vcaNBP0EJv7A6B0ucgxESiyW2XxUaLOJ3C9Jk=",
+      "hash": "sha256-RgO4KrV1bTuJJITu6TxWefh5pldrNNbGqeYVFj9v\/kc=",
       "url": "_framework\/_bin\/BlazorLeaflet.pdb"
     },
     {
@@ -381,9 +385,9 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-\/lrFJYaYOrDInZI9EhIO9+cgi\/fsg8ft41jMJxtIKbQ=",
+      "hash": "sha256-JLkj0CdmJYduwAAXo2Ca496D1Ihyu5VzNbKnXJ5M1j8=",
       "url": "_framework\/blazor.boot.json"
     }
   ],
-  "version": "XM3VA8v9"
+  "version": "wl538cPR"
 };

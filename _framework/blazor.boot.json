@@ -6,7 +6,7 @@
   "linkerEnabled": false,
   "resources": {
     "assembly": {
-      "TaniePiwoClient.dll": "sha256-whq+5ld3oH2pZ0\/NQG00CAhd1ebnIrHqP2P5m0W0DBw=",
+      "TaniePiwoClient.dll": "sha256-gu6Z\/yBvKtiN3lkBkNNfz5UUJxn4fjwasYUINeUHUY0=",
       "System.Net.Http.Json.dll": "sha256-99dseBOagY3mzu5Y8Eqm8gRI+o8QbbCp7R2Ew9bQ+5E=",
       "System.Buffers.dll": "sha256-ZxXy75PYbzJxNfAc\/SAP1nUYm4gt1jSaOpFnBb9m85M=",
       "mscorlib.dll": "sha256-BaZPMj95+YNe3G4ckTGD6szZFwZeA2MOHn91zTGKDeU=",
@@ -58,11 +58,11 @@
       "Microsoft.Extensions.Options.dll": "sha256-rvTW0d54uLW0iDMAX30lpmr9f8uHoS3YYkEU5zNGhyc=",
       "Microsoft.JSInterop.dll": "sha256-LqwA2Rpm96Ualk0IhLZar87kfRCyKHzHTeTt2jYhm7M=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-czNf3btAeBW\/vvID5LAfgcsNZ+GM3ssVuPaMflcg0rs=",
-      "BlazorLeaflet.dll": "sha256-7oamPwKGK19cpkIncTXO6xssaukTKqizdN3Y+McFM8w="
+      "BlazorLeaflet.dll": "sha256-Bbpdxuam3kxDoqdrtxfDqCJJ04DKjKOTewZqMID5H4s="
     },
     "pdb": {
-      "TaniePiwoClient.pdb": "sha256-MFZNaNgUlYeFv8p+eWFJJD2g6O6PPupLDDk2rNapu\/g=",
-      "BlazorLeaflet.pdb": "sha256-jM5pt\/vcaNBP0EJv7A6B0ucgxESiyW2XxUaLOJ3C9Jk="
+      "TaniePiwoClient.pdb": "sha256-Fj7Cryeik4XNM+rMYNpGSKAX98pA1SgrYFzGhhS8gP4=",
+      "BlazorLeaflet.pdb": "sha256-RgO4KrV1bTuJJITu6TxWefh5pldrNNbGqeYVFj9v\/kc="
     },
     "runtime": {
       "dotnet.3.2.0.js": "sha256-mPoqx7XczFHBWk3gRNn0hc9ekG1OvkKY4XiKRY5Mj5U=",
