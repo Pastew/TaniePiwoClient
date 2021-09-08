@@ -87,7 +87,7 @@
             {
                 Draggable = false,
                 // Title = "Some title",
-                Popup = new Popup { Content = pubData.Name },
+                Popup = new Popup { Content = $"<b>{pubData.Name}</b>" },
                 Tooltip = new Tooltip { Content = FormatBeersContent(pubData.BeerDataList) }
             };
 
