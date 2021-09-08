@@ -57,7 +57,7 @@
     private int popupAnchorY = (int) (-120 * _markerScale);
     private int tooltipAnchorY = (int) (-50 * _markerScale);
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         _map = new Map(jsRuntime)
         {
@@ -120,12 +120,6 @@
         while (markers.Count > 0)
             _map.AddLayer(markers.Dequeue());
     }
-
-
-    // private InteractiveLayer.MouseEventHandler OnMarkerClicked(Marker marker)
-    // {
-    //     return OnMarketClickedEvent;
-    // }
 
     private void OnMarketClickedEvent(InteractiveLayer sender, MouseEvent e)
     {
