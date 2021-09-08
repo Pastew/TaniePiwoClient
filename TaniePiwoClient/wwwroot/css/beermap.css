@@ -3,8 +3,8 @@
   width: 100%;
 }
 
-#pub-info-bottom-box {
-  display: none;
+#pubinfo {
+  /*display: none;*/
   position: absolute;
   left: 0;
   right: auto;
@@ -20,7 +20,7 @@
 }
 
 @media (min-width: 768px) {
-  #pub-info-bottom-box {
+  #pubinfo {
     left: auto;
     right: 0;
     top: 0;
@@ -33,7 +33,7 @@
   }
 }
 
-#pub-info-bottom-box-close {
+#pubinfo-close {
   position: fixed;
   right: 0;
   cursor: pointer;
@@ -42,7 +42,7 @@
   padding-top: 5px;
 }
 
-#pub-info-bottom-box-name {
+#pubinfo-name {
   font-size: 1.4em;
   line-height: 1.4em;
   font-weight: 1000;
@@ -50,7 +50,7 @@
   text-align: center;
 }
 
-#pub-info-bottom-box-google-maps-link {
+#pubinfo-google-maps-link {
   padding-top: 10px;
   text-align: center;
 }
@@ -66,7 +66,7 @@
   width: fit-content;
 }
 
-#pub-info-bottom-box-last-update{
+#pubinfo-last-update{
   text-align: center;
   font-size: 0.8em;
 }

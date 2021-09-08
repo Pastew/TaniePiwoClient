@@ -5,19 +5,24 @@
 @using BlazorLeaflet
 @using System.IO
 @using System.Text
+@using BlazorLeaflet.Models.Events
 @inject IJSRuntime jsRuntime
 @inject HttpClient httpClient
 
 <div id="beermap">
-    <LeafletMap Map="_map" />
+    <LeafletMap Map="_map"/>
 </div>
 
-<div id="pub-info-bottom-box" style="display: block;">
-    <div id="pub-info-bottom-box-close"><span class="oi oi-x"></span></div>
-    <div id="pub-info-bottom-box-name">Pub pod ziemią</div>
-    
-    <div id="pub-info-bottom-box-google-maps-link"><a href="https://goo.gl/maps/LDMGMH2Gr9965oyXA">Google Maps <span class="oi oi-external-link"></span></a></div>
-    
+<div id="pubinfo" style="@(PubInfoVisible ? "display: block;" : "display: none;")">
+    <div id="pubinfo-close" @onclick="PubInfoClose">
+        <span class="oi oi-x"></span>
+    </div>
+    <div id="pubinfo-name">Pub pod ziemią</div>
+
+    <div id="pubinfo-google-maps-link">
+        <a href="https://goo.gl/maps/LDMGMH2Gr9965oyXA">Google Maps <span class="oi oi-external-link"></span></a>
+    </div>
+
     <ul id="beer-list">
         <li>Perła lana: <span class="beer-price">5 PLN</span></li>
         <li>Żywiec butelka: <span class="beer-price">12 PLN</span></li>
@@ -29,27 +34,28 @@
         <li>Okocim butelka: <span class="beer-price">13 PLN</span></li>
         <li>Okocim butelka: <span class="beer-price">13 PLN</span></li>
     </ul>
-    
-    <div id="pub-info-bottom-box-last-update">Ostatnia aktualizacja: 20.07.2021</div>
 
+    <div id="pubinfo-last-update">Ostatnia aktualizacja: 20.07.2021</div>
 </div>
 
 
 @code
 {
+    private bool PubInfoVisible { get; set; } = false;
+
     private Map _map;
     private DrawHandler _drawHandler;
-    private LatLng _mapCenterLatLng = new LatLng { Lat = 50.061446f, Lng = 19.938076f };
-    private const string baseURL = "https://raw.githubusercontent.com/Pastew/TaniePiwoDatabase/main/";
+    private LatLng _mapCenterLatLng = new LatLng {Lat = 50.061446f, Lng = 19.938076f};
+        private const string baseURL = "https://raw.githubusercontent.com/Pastew/TaniePiwoDatabase/main/";
     private PubData[] pubDataList;
 
     private static float _markerScale = 0.5f;
-    private int sizeX = (int)(107 * _markerScale);
-    private int sizeY = (int)(136 * _markerScale);
-    private int anchorX = (int)(37 * _markerScale);
-    private int anchorY = (int)(133 * _markerScale);
-    private int popupAnchorY = (int)(-120 * _markerScale);
-    private int tooltipAnchorY = (int)(-50 * _markerScale);
+    private int sizeX = (int) (107 * _markerScale);
+    private int sizeY = (int) (136 * _markerScale);
+    private int anchorX = (int) (37 * _markerScale);
+    private int anchorY = (int) (133 * _markerScale);
+    private int popupAnchorY = (int) (-120 * _markerScale);
+    private int tooltipAnchorY = (int) (-50 * _markerScale);
 
     protected override async Task OnInitializedAsync()
     {
@@ -86,9 +92,9 @@
             Marker marker = new Marker(_markerLatLng)
             {
                 Draggable = false,
-                // Title = "Some title",
-                Popup = new Popup { Content = $"<b>{pubData.Name}</b>" },
-                Tooltip = new Tooltip { Content = FormatBeersContent(pubData.BeerDataList) }
+    // Title = "Some title",
+                Popup = new Popup {Content = $"<b>{pubData.Name}</b>"},
+                Tooltip = new Tooltip {Content = FormatBeersContent(pubData.BeerDataList)}
             };
 
             int cheapestBeerPrice = pubData.CheapestBeerPrice / 100;
@@ -96,26 +102,35 @@
             marker.Icon = new Icon
             {
                 Url = $"/markers/marker_{cheapestBeerPrice}.png",
-
                 HasAnchor = true,
                 Anchor = new System.Drawing.Point(anchorX, anchorY),
-
                 HasSize = true,
                 Size = new System.Drawing.Size(sizeX, sizeY),
-
                 HasPopupAnchor = true,
                 PopupAnchor = new System.Drawing.Point(0, popupAnchorY),
-
                 HasTooltipAnchor = true,
                 TooltipAnchor = new System.Drawing.Point(0, tooltipAnchorY),
-                //TooltipAnchor = new System.Drawing.Point(37, 233),
+    //TooltipAnchor = new System.Drawing.Point(37, 233),
             };
 
+            marker.OnClick += OnMarketClickedEvent;
             markers.Enqueue(marker);
         }
 
         while (markers.Count > 0)
             _map.AddLayer(markers.Dequeue());
+    }
+
+
+    // private InteractiveLayer.MouseEventHandler OnMarkerClicked(Marker marker)
+    // {
+    //     return OnMarketClickedEvent;
+    // }
+
+    private void OnMarketClickedEvent(InteractiveLayer sender, MouseEvent e)
+    {
+        PubInfoVisible = true;
+        InvokeAsync(StateHasChanged);
     }
 
     private PubData[] GetPubDataList(string result)
@@ -139,7 +154,7 @@
                     BeerData beerData = new BeerData();
                     List<string> beerStringSplit = columns[i].Split(":").ToList();
                     beerData.Name = beerStringSplit[0];
-                    beerData.Price = (int)(float.Parse(beerStringSplit[1].Trim()) * 100);
+                    beerData.Price = (int) (float.Parse(beerStringSplit[1].Trim()) * 100);
                     pubData.BeerDataList.Add(beerData);
                 }
             }
@@ -164,6 +179,12 @@
             return $"{zlotych} PLN";
         else
             return String.Format("{0:0.00} PLN", zlotych);
+    }
+
+    private void PubInfoClose()
+    {
+        PubInfoVisible = false;
+        InvokeAsync(StateHasChanged);
     }
 
     // Random rnd = new Random();
